@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Aastha App</string>
+
+    <string name="facebook_app_id">262306515567911</string>
+    <string name="fb_login_protocol_scheme">fb262306515567911</string>
+
+</resources>

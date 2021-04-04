@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".signUPActivity">
+
+
+    <View
+        android:id="@+id/topview"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:background="@color/bg" />
+
+    <View
+        android:id="@+id/bottomView"
+        android:layout_width="wrap_content"
+        android:layout_height="130dp"
+        android:layout_below="@id/topview"
+
+        android:background="@drawable/ic_wavea" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/bottomView"
+        >
+
+        <LinearLayout
+            android:id="@+id/linearV"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/EtuserName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/white"
+                android:ems="10"
+                android:hint="Username"
+                android:inputType="textPersonName"
+                android:padding="9dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/Etemail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:background="@color/white"
+                android:ems="10"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:padding="9dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/EtPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/white"
+                android:ems="10"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:padding="9dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearH"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/linearV"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnSignup"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="51dp"
+                android:layout_marginLeft="51dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/signin"
+                android:padding="15dp"
+                android:text="sign up" />
+
+            <Button
+                android:id="@+id/btnGoogle"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="51dp"
+                android:layout_marginRight="51dp"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/search"
+                android:padding="15dp"
+                android:text="google"
+                app:backgroundTint="#FF8A80" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/linearH"
+            android:orientation="vertical">
+
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/login_button"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:drawableLeft="@drawable/fbb"
+                android:padding="15dp"
+                android:text="facebook"
+                android:textColor="#8C9EFF"
+                app:backgroundTint="#FFFFFF"
+                app:cornerRadius="4dp" />
+
+            <TextView
+                android:id="@+id/tvalreadyAccount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:gravity="center"
+                android:text="Already have account?"
+                android:textColor="#875F01"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>
