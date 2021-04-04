@@ -13,12 +13,7 @@ import android.widget.Toast;
 
 import com.example.aasthaapp.Models.User;
 import com.example.aasthaapp.databinding.ActivitySignUPBinding;
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -45,10 +40,6 @@ public class signUPActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     GoogleSignInClient mGoogleSignInClient;
 
-    private static final String TAG ="AASTHAAPP" ;
-    private CallbackManager callbackManager;
-    private static final String EMAIL = "email";
-    private LoginButton loginButton;
 
 
 
@@ -66,33 +57,8 @@ public class signUPActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
-        callbackManager= CallbackManager.Factory.create();
 
-        loginButton = (LoginButton) findViewById(R.id.login_button);
-        loginButton.setPermissions(Arrays.asList(EMAIL));
-        // If you are using in a fragment, call loginButton.setFragment(this);
 
-        // Callback registration
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                // App code
-                handleFacebookAccessToken(loginResult.getAccessToken());
-                Intent i= new Intent(signUPActivity.this, aboutActivity.class);
-                startActivity(i);
-            }
-
-            @Override
-            public void onCancel() {
-                // App code
-            }
-
-            @Override
-            public void onError(FacebookException exception) {
-                // App code
-                Log.d(TAG, "onerror:" +exception.getMessage());
-            }
-        });
 
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -161,7 +127,7 @@ public class signUPActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
@@ -211,29 +177,5 @@ public class signUPActivity extends AppCompatActivity {
                 });
 
     }
-    private void handleFacebookAccessToken(AccessToken token) {
-        Log.d(TAG, "handleFacebookAccessToken:" + token);
-        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
-        auth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
-                            FirebaseUser user = auth.getCurrentUser();
-                            updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(signUPActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            updateUI(null);
-                        }
-                    }
-                });
-    }
-
-    private void updateUI(Object o) {
-    }
+    
 }

@@ -117,19 +117,6 @@
             android:layout_below="@id/linearH"
             android:orientation="vertical">
 
-            <com.facebook.login.widget.LoginButton
-                android:id="@+id/login_button"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="15dp"
-                android:drawableLeft="@drawable/fbb"
-                android:padding="15dp"
-                android:text="facebook"
-                android:textColor="#8C9EFF"
-                app:backgroundTint="#FFFFFF"
-                app:cornerRadius="4dp" />
 
             <TextView
                 android:id="@+id/tvalreadyAccount"
