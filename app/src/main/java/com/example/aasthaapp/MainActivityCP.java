@@ -13,17 +13,19 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.aasthaapp.Adapters.UsersAdapter;
+import com.example.aasthaapp.Adapters.UsersAdapterCP;
 import com.example.aasthaapp.Models.User;
-import com.example.aasthaapp.databinding.ActivityMainBinding;
+import com.example.aasthaapp.Models.UserCP;
+import com.example.aasthaapp.databinding.ActivityMainCPBinding;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivityCP extends AppCompatActivity {
     FirebaseAuth auth;
-    ActivityMainBinding binding;
+    ActivityMainCPBinding binding;
     RecyclerView recview;
-    UsersAdapter adapter;
+    UsersAdapterCP adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,19 +34,25 @@ public class MainActivity extends AppCompatActivity {
 
         auth= FirebaseAuth.getInstance();
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        binding = ActivityMainCPBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        recview = findViewById(R.id.recview);
+
+        recview = findViewById(R.id.recviewCP);
         recview.setLayoutManager(new LinearLayoutManager(this));
 
-        FirebaseRecyclerOptions<User> options =
-                new FirebaseRecyclerOptions.Builder<User>()
-                .setQuery(FirebaseDatabase.getInstance().getReference().child("UsersAbuse"), User.class)
-                .build();
-
-        adapter=new UsersAdapter(options);
+        FirebaseRecyclerOptions<UserCP> options =
+                new FirebaseRecyclerOptions.Builder<UserCP>()
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("UsersCP"), UserCP.class)
+                        .build();
+        adapter=new UsersAdapterCP(options);
         recview.setAdapter(adapter);
 
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent= new Intent(MainActivityCP.this, aboutActivity.class);
+        startActivity(intent);
+        super.onBackPressed();
     }
     @Override
     protected void onStart() {
@@ -57,12 +65,6 @@ public class MainActivity extends AppCompatActivity {
         adapter.stopListening();
     }
 
-    @Override
-    public void onBackPressed() {
-        Intent intent= new Intent(MainActivity.this, aboutActivity.class);
-        startActivity(intent);
-        super.onBackPressed();
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -83,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.logout:
                 auth.signOut();
-                Intent intent = new Intent(MainActivity.this, SignInActivity.class);
+                Intent intent = new Intent(MainActivityCP.this, SignInActivityCP.class);
                 startActivity(intent);
 
                 break;

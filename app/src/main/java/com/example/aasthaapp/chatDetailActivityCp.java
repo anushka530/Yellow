@@ -10,7 +10,7 @@ import android.view.View;
 
 import com.example.aasthaapp.Adapters.ChatAdapter;
 import com.example.aasthaapp.Models.MessageModel;
-import com.example.aasthaapp.databinding.ActivityChatDetailBinding;
+import com.example.aasthaapp.databinding.ActivityChatDetailCpBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -22,16 +22,16 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class chatDetailActivity extends AppCompatActivity {
+public class chatDetailActivityCp extends AppCompatActivity {
 
-    ActivityChatDetailBinding binding;
+    ActivityChatDetailCpBinding binding;
     FirebaseDatabase database;
     FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityChatDetailBinding.inflate(getLayoutInflater());
+        binding = ActivityChatDetailCpBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         getSupportActionBar().hide();
         database = FirebaseDatabase.getInstance();
@@ -48,17 +48,17 @@ public class chatDetailActivity extends AppCompatActivity {
         binding.backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(chatDetailActivity.this, MainActivity.class);
+                Intent intent=new Intent(chatDetailActivityCp.this, MainActivityCP.class);
                 startActivity(intent);
             }
         });
 
         final ArrayList<MessageModel> messageModels= new ArrayList<>();
 
-        final ChatAdapter chatAdapter= new ChatAdapter(messageModels, this);
+        final ChatAdapter chatAdapter= new ChatAdapter(messageModels,this);
         binding.chatRecyclerView.setAdapter(chatAdapter);
 
-        LinearLayoutManager layoutManager= new LinearLayoutManager(chatDetailActivity.this);
+        LinearLayoutManager layoutManager= new LinearLayoutManager(chatDetailActivityCp.this);
         binding.chatRecyclerView.setLayoutManager(layoutManager);
 
         String senderRoom= senderId+receiveId;
@@ -117,5 +117,5 @@ public class chatDetailActivity extends AppCompatActivity {
 
 
     }
-}
 
+}

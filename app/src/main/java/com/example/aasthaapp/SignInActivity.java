@@ -45,7 +45,6 @@ public class SignInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_in);
         getSupportActionBar().hide();
 
         progressDialog = new ProgressDialog(SignInActivity.this);
@@ -77,7 +76,7 @@ public class SignInActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 progressDialog.dismiss();
                                 if (task.isSuccessful()) {
-                                    Intent intent = new Intent(SignInActivity.this, aboutActivity.class);
+                                    Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                                     startActivity(intent);
                                 } else {
                                     Toast.makeText(SignInActivity.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
@@ -103,7 +102,7 @@ public class SignInActivity extends AppCompatActivity {
 
 
         if (auth.getCurrentUser() != null) {
-            Intent intent = new Intent(SignInActivity.this, aboutActivity.class);
+            Intent intent = new Intent(SignInActivity.this, MainActivity.class);
             startActivity(intent);
         }
 
@@ -153,8 +152,6 @@ public class SignInActivity extends AppCompatActivity {
                             User users = new User();
                             users.setUserId(user.getUid());
                             users.setUsername(user.getDisplayName());
-                            users.setProfilepic(user.getPhotoUrl().toString());
-                            database.getReference().child("Users").child(user.getUid()).setValue(users);
 
                             Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                             startActivity(intent);

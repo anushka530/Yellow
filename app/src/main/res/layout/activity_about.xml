@@ -219,7 +219,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="HELPLINE NUMBERS"
+                    android:text="CONTACT US"
                     android:textColor="#875F01"
                     android:textStyle="bold" />
             </LinearLayout>
