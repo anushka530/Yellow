@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.aasthaapp.Models.User;
-import com.example.aasthaapp.Models.UserCP;
 import com.example.aasthaapp.R;
 import com.example.aasthaapp.chatDetailActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -27,33 +26,39 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 
-public class UsersAdapter extends FirebaseRecyclerAdapter<User,UsersAdapter.viewHolder> {
+public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.viewHolder> {
 
+    ArrayList<User> list;
+    Context context;
 
+    public UsersAdapter(ArrayList<User> list, Context context) {
+        this.list = list;
+        this.context = context;
+    }
 
-    /**
-     * Initialize a {@link RecyclerView.Adapter} that listens to a Firebase query. See
-     * {@link FirebaseRecyclerOptions} for configuration options.
-     *
-     * @param options
-     */
-    public UsersAdapter(@NonNull FirebaseRecyclerOptions<User> options) {
-        super(options);
+    @NonNull
+    @Override
+    public viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view= LayoutInflater.from(context).inflate(R.layout.sample_show_user, parent, false);
+
+        return new viewHolder(view);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull UsersAdapter.viewHolder holder, int position, @NonNull User users) {
+    public void onBindViewHolder(@NonNull viewHolder holder, int position) {
+        User users= list.get(position);
+
         Picasso.get().load(users.getProfilepic()).placeholder(R.drawable.user).into(holder.image);
         holder.userName.setText(users.getUsername());
 
-        FirebaseDatabase.getInstance().getReference().child("chats").child(FirebaseAuth.getInstance().getUid() + users.getUserId())
+        FirebaseDatabase.getInstance().getReference().child("chats").child(FirebaseAuth.getInstance().getUid()+ users.getUserId())
                 .orderByChild("timestamp")
                 .limitToLast(1)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.hasChildren()) {
-                            for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                        if(snapshot.hasChildren()){
+                            for(DataSnapshot snapshot1:snapshot.getChildren()){
                                 holder.lastMessage.setText(snapshot1.child("message").getValue().toString());
                             }
                         }
@@ -66,25 +71,28 @@ public class UsersAdapter extends FirebaseRecyclerAdapter<User,UsersAdapter.view
                 });
 
 
+
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), chatDetailActivity.class);
+                Intent intent= new Intent(context, chatDetailActivity.class);
                 intent.putExtra("userId", users.getUserId());
                 intent.putExtra("profilePic", users.getProfilepic());
                 intent.putExtra("username", users.getUsername());
-                v.getContext().startActivity(intent);
+                context.startActivity(intent);
             }
         });
+
     }
 
     @Override
-    public viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.sample_show_user, parent, false);
+    public int getItemCount() {
+        return list.size();
 
-        return new viewHolder(view);
     }
-    class viewHolder extends RecyclerView.ViewHolder {
+
+    public static class viewHolder extends RecyclerView.ViewHolder {
         ImageView image;
         TextView userName, lastMessage;
 
@@ -99,7 +107,4 @@ public class UsersAdapter extends FirebaseRecyclerAdapter<User,UsersAdapter.view
     }
 
 }
-
-
-
 

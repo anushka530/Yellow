@@ -11,6 +11,7 @@ import android.view.View;
 import com.example.aasthaapp.Adapters.ChatAdapter;
 import com.example.aasthaapp.Models.MessageModel;
 import com.example.aasthaapp.databinding.ActivityChatDetailBinding;
+
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -35,12 +36,13 @@ public class chatDetailActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         getSupportActionBar().hide();
         database = FirebaseDatabase.getInstance();
-        auth= FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
 
-        String senderId= auth.getUid();
-        String receiveId= getIntent().getStringExtra("userId");
-        String userName= getIntent().getStringExtra("username");
-        String profilepic= getIntent().getStringExtra("profilePic");
+        final String senderId = auth.getUid();
+        String receiveId = getIntent().getStringExtra("userId");
+
+        String userName = getIntent().getStringExtra("username");
+        String profilepic = getIntent().getStringExtra("profilePic");
 
         binding.userName.setText(userName);
         Picasso.get().load(profilepic).placeholder(R.drawable.user).into(binding.profileImage);
@@ -48,21 +50,21 @@ public class chatDetailActivity extends AppCompatActivity {
         binding.backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(chatDetailActivity.this, MainActivity.class);
+                Intent intent = new Intent(chatDetailActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });
 
-        final ArrayList<MessageModel> messageModels= new ArrayList<>();
+        final ArrayList<MessageModel> messageModels = new ArrayList<>();
 
-        final ChatAdapter chatAdapter= new ChatAdapter(messageModels, this);
+        final ChatAdapter chatAdapter = new ChatAdapter(messageModels, this);
         binding.chatRecyclerView.setAdapter(chatAdapter);
 
-        LinearLayoutManager layoutManager= new LinearLayoutManager(chatDetailActivity.this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(chatDetailActivity.this);
         binding.chatRecyclerView.setLayoutManager(layoutManager);
 
-        String senderRoom= senderId+receiveId;
-        String receiverRoom=receiveId+senderId;
+        final String senderRoom = senderId + receiveId;
+        final String receiverRoom = receiveId + senderId;
 
         database.getReference().child("chats")
                 .child(senderRoom)
@@ -70,8 +72,8 @@ public class chatDetailActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         messageModels.clear();
-                        for(DataSnapshot snapshot1:snapshot.getChildren()){
-                            MessageModel model= snapshot1.getValue(MessageModel.class);
+                        for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                            MessageModel model = snapshot1.getValue(MessageModel.class);
 
                             messageModels.add(model);
                         }
@@ -84,14 +86,11 @@ public class chatDetailActivity extends AppCompatActivity {
                     }
                 });
 
-
-
-
-        binding.send.setOnClickListener(new View.OnClickListener() {
+            binding.send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String message= binding.etMessage.getText().toString();
-                final MessageModel model= new MessageModel(senderId, message);
+                String message = binding.etMessage.getText().toString();
+                final MessageModel model = new MessageModel(senderId, message);
                 model.setTimestamp(new Date().getTime());
                 binding.etMessage.setText("");
 
@@ -117,5 +116,5 @@ public class chatDetailActivity extends AppCompatActivity {
 
 
     }
-}
 
+}

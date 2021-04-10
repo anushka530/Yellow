@@ -1,6 +1,5 @@
 package com.example.aasthaapp.Adapters;
 
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,23 +11,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.aasthaapp.Models.MessageModel;
 import com.example.aasthaapp.R;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
-public class ChatAdapter extends RecyclerView.Adapter {
+public class ChatAdapter extends RecyclerView.Adapter  {
     ArrayList<MessageModel> messageModels;
     Context context;
-
 
     int SENDER_VIEW_TYPE=1;
     int RECEIVER_VIEW_TYPE=2;
 
     public ChatAdapter(ArrayList<MessageModel> messageModels, Context context) {
         this.messageModels = messageModels;
-        this.context= context;
-
+        this.context = context;
 
 
     }

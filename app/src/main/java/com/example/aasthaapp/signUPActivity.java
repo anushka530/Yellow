@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.renderscript.ScriptGroup;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.aasthaapp.Models.User;
@@ -43,7 +45,7 @@ public class signUPActivity extends AppCompatActivity {
 
 
 
-    @Override
+     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
@@ -57,9 +59,17 @@ public class signUPActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
 
+         Spinner mySpinner= findViewById(R.id.spinner);
+
+         ArrayAdapter<String> myAdapter= new ArrayAdapter<String>(signUPActivity.this,
+                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.names));
+         myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+         mySpinner.setAdapter(myAdapter);
+     
 
 
-        // Configure Google Sign In
+
+         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -82,18 +92,19 @@ public class signUPActivity extends AppCompatActivity {
 
                                 if (task.isSuccessful()) {
                                     User user = new User(binding.EtuserName.getText().toString(),
-                                            binding.Etemail.getText().toString(), binding.EtPassword.getText().toString());
+                                            binding.Etemail.getText().toString(),
+                                            binding.EtPassword.getText().toString(),
+                                            binding.spinner.getSelectedItem().toString());
                                     String id = Objects.requireNonNull(Objects.requireNonNull(task.getResult()).getUser()).
                                             getUid();
-                                    database.getReference().child("UsersAbuse").child(id).setValue(user);
+                                    database.getReference().child("Users").child(id).setValue(user);
+
 
                                         Intent intent = new Intent(signUPActivity.this, MainActivity.class);
                                         startActivity(intent);
 
 
-
                                 }
-
                                 else {
                                     Toast.makeText(signUPActivity.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                                 }
@@ -150,6 +161,7 @@ public class signUPActivity extends AppCompatActivity {
     }
 
     private void firebaseAuthWithGoogle(String idToken) {
+
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         auth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -163,13 +175,10 @@ public class signUPActivity extends AppCompatActivity {
                             users.setUserId(user.getUid());
                             users.setUsername(user.getDisplayName());
 
-                            database.getReference().child("UsersAbuse").child(user.getUid()).setValue(users);
+                            database.getReference().child("Users").child(user.getUid()).setValue(users);
 
-
-                                Intent intent= new Intent(signUPActivity.this,MainActivity.class);
+                                Intent intent = new Intent(signUPActivity.this, MainActivity.class);
                                 startActivity(intent);
-
-
 
                             Toast.makeText(signUPActivity.this, "Sign up with Google", Toast.LENGTH_SHORT).show();
                             //updateUI(user);

@@ -1,14 +1,16 @@
 package com.example.aasthaapp.Models;
 
 public class User {
-    String profilepic, username, mail, password, userId, lastMesaage;
-    public User(String profilepic, String username, String mail, String password, String userId, String lastMesaage) {
+    String profilepic, username, mail, password, userId, lastMesaage, status, spinner;
+    public User(String spinner,String status,String profilepic, String username, String mail, String password, String userId, String lastMesaage) {
         this.profilepic = profilepic;
         this.username = username;
         this.mail = mail;
         this.password = password;
         this.userId = userId;
         this.lastMesaage = lastMesaage;
+        this.status= status;
+        this.spinner= spinner;
 
     }
 
@@ -21,14 +23,29 @@ public class User {
 
 
     //SignUp Constructor
-    public User( String username, String mail, String password) {
+    public User( String username, String mail, String password,String spinner) {
         this.username = username;
         this.mail = mail;
         this.password = password;
+        this.spinner= spinner;
 
     }
 
+    public String getSpinner() {
+        return spinner;
+    }
 
+    public void setSpinner(String spinner) {
+        this.spinner = spinner;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getUserId() {
         return userId;
