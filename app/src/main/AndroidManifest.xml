@@ -11,11 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AasthaApp">
-        <activity android:name=".SettingsActivity"></activity>
-        <activity android:name=".chatDetailActivity" >
-
-        </activity>
-        <activity android:name=".aboutActivity"></activity>
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".chatDetailActivity"></activity>
+        <activity android:name=".aboutActivity" />
         <activity android:name=".SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,10 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".signUPActivity">
-
-
-        </activity>
+        <activity android:name=".signUPActivity"></activity>
         <activity android:name=".MainActivity" />
     </application>
 

@@ -6,28 +6,40 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.aasthaapp.Adapters.ChatAdapter;
+import com.example.aasthaapp.Adapters.UsersAdapter;
 import com.example.aasthaapp.Models.MessageModel;
+import com.example.aasthaapp.Models.User;
 import com.example.aasthaapp.databinding.ActivityChatDetailBinding;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
 import java.util.Date;
+
 
 public class chatDetailActivity extends AppCompatActivity {
 
     ActivityChatDetailBinding binding;
     FirebaseDatabase database;
     FirebaseAuth auth;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,14 +50,16 @@ public class chatDetailActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
 
+
         final String senderId = auth.getUid();
         String receiveId = getIntent().getStringExtra("userId");
-
         String userName = getIntent().getStringExtra("username");
         String profilepic = getIntent().getStringExtra("profilePic");
 
+
         binding.userName.setText(userName);
         Picasso.get().load(profilepic).placeholder(R.drawable.user).into(binding.profileImage);
+
 
         binding.backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +71,7 @@ public class chatDetailActivity extends AppCompatActivity {
 
         final ArrayList<MessageModel> messageModels = new ArrayList<>();
 
-        final ChatAdapter chatAdapter = new ChatAdapter(messageModels, this);
+        final ChatAdapter chatAdapter = new ChatAdapter(messageModels, this, receiveId);
         binding.chatRecyclerView.setAdapter(chatAdapter);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(chatDetailActivity.this);
@@ -74,7 +88,7 @@ public class chatDetailActivity extends AppCompatActivity {
                         messageModels.clear();
                         for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                             MessageModel model = snapshot1.getValue(MessageModel.class);
-
+                            model.setMessageId(snapshot1.getKey());
                             messageModels.add(model);
                         }
                         chatAdapter.notifyDataSetChanged();
@@ -86,9 +100,13 @@ public class chatDetailActivity extends AppCompatActivity {
                     }
                 });
 
-            binding.send.setOnClickListener(new View.OnClickListener() {
+        binding.send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (binding.etMessage.getText().toString().isEmpty()) {
+                    binding.etMessage.setError("Enter your message");
+                    return;
+                }
                 String message = binding.etMessage.getText().toString();
                 final MessageModel model = new MessageModel(senderId, message);
                 model.setTimestamp(new Date().getTime());
@@ -109,11 +127,13 @@ public class chatDetailActivity extends AppCompatActivity {
                             }
                         });
 
+
                     }
                 });
+
+
             }
         });
-
 
     }
 

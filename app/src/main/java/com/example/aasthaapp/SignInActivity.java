@@ -25,9 +25,11 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class SignInActivity extends AppCompatActivity {
@@ -68,6 +70,14 @@ public class SignInActivity extends AppCompatActivity {
         binding.btnSignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(binding.Etemail.getText().toString().isEmpty()){
+                    binding.Etemail.setError("Enter your email");
+                    return;
+                }
+                if(binding.EtPassword.getText().toString().isEmpty()){
+                    binding.EtPassword.setError("Enter your password");
+                    return;
+                }
                 progressDialog.show();
                 auth.signInWithEmailAndPassword(binding.Etemail.getText().toString(),
                         binding.EtPassword.getText().toString()).addOnCompleteListener
@@ -76,7 +86,8 @@ public class SignInActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 progressDialog.dismiss();
                                 if (task.isSuccessful()) {
-                                    Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+
+                                    Intent intent = new Intent(SignInActivity.this, aboutActivity.class);
                                     startActivity(intent);
                                 } else {
                                     Toast.makeText(SignInActivity.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
@@ -102,7 +113,7 @@ public class SignInActivity extends AppCompatActivity {
 
 
         if (auth.getCurrentUser() != null) {
-            Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+            Intent intent = new Intent(SignInActivity.this, aboutActivity.class);
             startActivity(intent);
         }
 
@@ -153,7 +164,8 @@ public class SignInActivity extends AppCompatActivity {
                             users.setUserId(user.getUid());
                             users.setUsername(user.getDisplayName());
 
-                            Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+
+                            Intent intent = new Intent(SignInActivity.this, aboutActivity.class);
                             startActivity(intent);
                             Toast.makeText(SignInActivity.this, "Sign in with Google", Toast.LENGTH_SHORT).show();
                             //updateUI(user);

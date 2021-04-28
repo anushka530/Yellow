@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.aasthaapp.Fragments.ChatFragment;
-import com.example.aasthaapp.Fragments.ContactFragment;
+import com.example.aasthaapp.Fragments.ChatListFragment;
 
 public class FragmentAdapter extends FragmentPagerAdapter {
     public FragmentAdapter(@NonNull FragmentManager fm) {
@@ -20,7 +20,7 @@ public class FragmentAdapter extends FragmentPagerAdapter {
 
         switch (position){
             case 0: return new ChatFragment();
-            case 1: return new ContactFragment();
+            case 1: return new ChatListFragment();
             default: return new ChatFragment();
         }
 
@@ -36,10 +36,10 @@ public class FragmentAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         String title = null;
         if(position==0){
-            title="CHATS";
+            title="USERS";
         }
         if(position==1){
-            title="CONTACT US";
+            title="CHAT LIST";
         }
 
         return title;

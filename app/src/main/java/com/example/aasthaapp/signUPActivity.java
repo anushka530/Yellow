@@ -30,9 +30,11 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class signUPActivity extends AppCompatActivity {
@@ -58,14 +60,6 @@ public class signUPActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
-
-         Spinner mySpinner= findViewById(R.id.spinner);
-
-         ArrayAdapter<String> myAdapter= new ArrayAdapter<String>(signUPActivity.this,
-                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.names));
-         myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-         mySpinner.setAdapter(myAdapter);
-     
 
 
 
@@ -93,14 +87,15 @@ public class signUPActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     User user = new User(binding.EtuserName.getText().toString(),
                                             binding.Etemail.getText().toString(),
-                                            binding.EtPassword.getText().toString(),
-                                            binding.spinner.getSelectedItem().toString());
+                                            binding.EtPassword.getText().toString());
+
                                     String id = Objects.requireNonNull(Objects.requireNonNull(task.getResult()).getUser()).
                                             getUid();
                                     database.getReference().child("Users").child(id).setValue(user);
 
 
-                                        Intent intent = new Intent(signUPActivity.this, MainActivity.class);
+
+                                        Intent intent = new Intent(signUPActivity.this, aboutActivity.class);
                                         startActivity(intent);
 
 
@@ -177,8 +172,10 @@ public class signUPActivity extends AppCompatActivity {
 
                             database.getReference().child("Users").child(user.getUid()).setValue(users);
 
-                                Intent intent = new Intent(signUPActivity.this, MainActivity.class);
-                                startActivity(intent);
+
+
+                            Intent intent = new Intent(signUPActivity.this, aboutActivity.class);
+                            startActivity(intent);
 
                             Toast.makeText(signUPActivity.this, "Sign up with Google", Toast.LENGTH_SHORT).show();
                             //updateUI(user);

@@ -8,6 +8,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.aasthaapp.Models.User;
@@ -26,7 +29,7 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity  {
 
     ActivitySettingsBinding binding;
     FirebaseStorage storage;
@@ -36,18 +39,24 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding= ActivitySettingsBinding.inflate(getLayoutInflater());
+        binding = ActivitySettingsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         getSupportActionBar().hide();
 
-        storage=FirebaseStorage.getInstance();
-        auth=FirebaseAuth.getInstance();
-        database=FirebaseDatabase.getInstance();
+        storage = FirebaseStorage.getInstance();
+        auth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+
+        Spinner mySpinner = findViewById(R.id.spinner);
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.names, R.layout.color_spinner);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mySpinner.setAdapter(adapter);
+
 
         binding.arrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(SettingsActivity.this, MainActivity.class);
+                Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });
@@ -55,20 +64,22 @@ public class SettingsActivity extends AppCompatActivity {
         binding.saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String status= binding.etStatusname.getText().toString();
-                String username= binding.etUsername.getText().toString();
+                String category = binding.spinner.getSelectedItem().toString();
+                String username = binding.etUsername.getText().toString();
 
                 // to update value
-                HashMap<String, Object> obj= new HashMap<>();
+                HashMap<String, Object> obj = new HashMap<>();
                 obj.put("username", username);
-                obj.put("status", status);
+                obj.put("category", category);
 
                 database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
                         .updateChildren(obj);
 
                 Toast.makeText(SettingsActivity.this, "profile updated", Toast.LENGTH_SHORT).show();
 
-            };
+            }
+
+            ;
 
         });
 
@@ -77,13 +88,13 @@ public class SettingsActivity extends AppCompatActivity {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        User users=snapshot.getValue(User.class);
+                        User users = snapshot.getValue(User.class);
                         Picasso.get()
                                 .load(users.getProfilepic())
-                                .placeholder(R.drawable.user)
+                                .placeholder(R.drawable.uploadimg)
                                 .into(binding.profileImage);
 
-                        binding.etStatusname.setText(users.getStatus());
+
                         binding.etUsername.setText(users.getUsername());
 
 
@@ -98,10 +109,10 @@ public class SettingsActivity extends AppCompatActivity {
         binding.plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i= new Intent();
+                Intent i = new Intent();
                 i.setAction(Intent.ACTION_GET_CONTENT);
                 i.setType("image/*"); // */*
-                startActivityForResult(i , 33);
+                startActivityForResult(i, 33);
             }
         });
     }
@@ -109,12 +120,12 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(data.getData()!= null){
+        if (data.getData() != null) {
 
-            Uri sFile= data.getData();
+            Uri sFile = data.getData();
             binding.profileImage.setImageURI(sFile);
 
-            final StorageReference ref= storage.getReference().child("profile_pictures")
+            final StorageReference ref = storage.getReference().child("profile_pictures")
                     .child(FirebaseAuth.getInstance().getUid());
 
             ref.putFile(sFile).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -132,4 +143,5 @@ public class SettingsActivity extends AppCompatActivity {
             });
         }
     }
+
 }

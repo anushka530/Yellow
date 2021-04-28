@@ -2,6 +2,7 @@ package com.example.aasthaapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -9,9 +10,11 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -25,10 +28,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 
+
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
     FirebaseAuth auth;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onBackPressed() {
-       finishAffinity();
-    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -73,7 +76,8 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.explore:
-                Intent intent1= new Intent(MainActivity.this, aboutActivity.class);
+                auth.signOut();
+                Intent intent1= new Intent(MainActivity.this,aboutActivity.class);
                 startActivity(intent1);
 
                 break;
@@ -81,4 +85,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
     }
+
+
 }

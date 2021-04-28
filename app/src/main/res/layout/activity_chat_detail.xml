@@ -4,21 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".chatDetailActivity">
+    tools:context=".chatDetailActivity"
+    >
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
         android:layout_above="@id/linear"
-        android:layout_below="@id/toolbar" />
+        />
 
     <LinearLayout
         android:id="@+id/linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
+        >
 
         <EditText
             android:id="@+id/etMessage"
@@ -31,7 +34,7 @@
 
             android:background="@drawable/btedittext"
             android:ems="10"
-            android:hint="Send message"
+            android:hint="Type a message"
             android:inputType="textPersonName"
             android:padding="10dp" />
 
@@ -40,7 +43,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             app:srcCompat="@drawable/sendarrow"
-            app:tint="@color/bg" />
+            app:tint="@color/purple_200" />
 
     </LinearLayout>
 
@@ -68,7 +71,7 @@
                 app:tint="@color/white" />
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profileImage"
+                android:id="@+id/profile_image"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_marginStart="5dp"
@@ -81,7 +84,6 @@
                 app:layout_constraintStart_toEndOf="@+id/backArrow"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
             <TextView
                 android:id="@+id/userName"
                 android:layout_width="wrap_content"
@@ -90,20 +92,8 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/profileImage"
+                app:layout_constraintStart_toEndOf="@+id/profile_image"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/imageView7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="15dp"
-                android:layout_marginRight="15dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/menu"
-                app:tint="@color/white" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

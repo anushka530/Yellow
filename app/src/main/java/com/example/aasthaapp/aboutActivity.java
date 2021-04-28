@@ -22,5 +22,18 @@ public class aboutActivity<c> extends AppCompatActivity {
         binding = ActivityAboutBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         getSupportActionBar().hide();
+
+        binding.btnChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i= new Intent(aboutActivity.this, MainActivity.class);
+                startActivity(i);
+            }
+        });
+
+    }
+    @Override
+    public void onBackPressed() {
+        finishAffinity();
     }
 }
