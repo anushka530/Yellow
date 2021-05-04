@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.aasthaapp.Fragments.ChatFragment;
-import com.example.aasthaapp.Fragments.ChatListFragment;
+import com.example.aasthaapp.Fragments.InstructionFragment;
 
 public class FragmentAdapter extends FragmentPagerAdapter {
     public FragmentAdapter(@NonNull FragmentManager fm) {
@@ -20,7 +20,7 @@ public class FragmentAdapter extends FragmentPagerAdapter {
 
         switch (position){
             case 0: return new ChatFragment();
-            case 1: return new ChatListFragment();
+            case 1: return new InstructionFragment();
             default: return new ChatFragment();
         }
 
@@ -39,7 +39,7 @@ public class FragmentAdapter extends FragmentPagerAdapter {
             title="USERS";
         }
         if(position==1){
-            title="CHAT LIST";
+            title="INSTRUCTIONS";
         }
 
         return title;

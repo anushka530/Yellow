@@ -1,14 +1,15 @@
 <resources>
     <string name="app_name">Aastha App</string>
-
-    <string name="facebook_app_id">262306515567911</string>
-    <string name="fb_login_protocol_scheme">fb262306515567911</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="explore">Explore</string>
-    <string name="search">Search</string>
     <string name="settings">Settings</string>
     <string name="logout">Logout</string>
+    <string name="let_us_join_our_hands_and_create_an_environment_full_of_hope_and_positivity">. Let us join our hands and create an environment full of hope and positivity.</string>
+    <string name="you_are_free_to_keep_any_username_but_make_sure_to_write_ab_abuse_cp_career_pressure_bu_bullying_l_lgbtqa_rs_relationship_ahead_of_your_username_to_easily_find_people_with_similar_concerns">. You are free to keep any username but make sure to write Ab (abuse), Cp (career pressure), Bu (bullying), L+ (LGBTQA+), Rs (relationship) ahead of your username to easily find people with similar concerns.</string>
+    <string name="choose_a_category_in_the_settings_activity_you_can_always_change_your_username_and_category">. Choose a category in the settings activity, you can always change your username and category.</string>
+    <string name="you_are_not_alone_we_will_overcome_this_together">. You are not alone, we will overcome this together.</string>
+    <string name="help_us_to_create_a_safe_and_useful_community_by_sticking_to_the_guidelines_above_and_maintaining_the_decorum_otherwise_your_account_may_be_suspended">. Help us to create a safe and useful community by sticking to the guidelines above and maintaining the decorum otherwise your account may be suspended.</string>
+    <string name="thank_you_for_using_our_app_we_hope_you_get_help_from_here_in_the_best_possible_way_for_any_query_you_can_contact_us">. Thank you for using our app, we hope you get help from here in the best possible way. For any query you can contact us.</string>
+    <string name="everyone_can_help_someone_just_by_being_there_at_the_right_moment_listening_and_sharing_sometimes_can_be_the_best_weapon_against_mental_health_one_on_one_conversation_with_someone_going_through_the_same_problems_may_help_you_understand_and_deal_with_the_situation_in_a_better_way">. Everyone can help someone just by being there at the right moment. Listening and sharing sometimes can be the best weapon against mental health. One on one conversation with someone going through the same problems may help you understand and deal with the situation in a better way.</string>
 
 
     <string-array name="names">
@@ -18,5 +19,7 @@
         <item>Relationship</item>
         <item>Body Shaming</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+
 
 </resources>

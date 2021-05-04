@@ -11,7 +11,7 @@ import com.example.aasthaapp.databinding.ActivityAboutBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class aboutActivity<c> extends AppCompatActivity {
+public class aboutActivity extends AppCompatActivity {
     ActivityAboutBinding binding;
     FirebaseAuth auth;
 
