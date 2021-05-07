@@ -8,13 +8,13 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.AasthaApp">
+        <activity android:name=".knowusActivity"></activity>
+        <activity android:name=".theripstActivity" />
         <activity android:name=".SettingsActivity" />
-        <activity android:name=".chatDetailActivity">
-
-        </activity>
+        <activity android:name=".chatDetailActivity" />
         <activity android:name=".aboutActivity" />
         <activity android:name=".SignInActivity">
             <intent-filter>
@@ -23,9 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".signUPActivity">
-            
-        </activity>
+        <activity android:name=".signUPActivity" />
         <activity android:name=".MainActivity" />
 
         <meta-data
