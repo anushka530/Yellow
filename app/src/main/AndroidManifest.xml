@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.AasthaApp">
+        <activity android:name=".SettingsActivity"></activity>
         <activity android:name=".splashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,12 +21,9 @@
         </activity>
         <activity android:name=".knowusActivity" />
         <activity android:name=".theripstActivity" />
-        <activity android:name=".SettingsActivity" />
         <activity android:name=".chatDetailActivity" />
         <activity android:name=".aboutActivity" />
-        <activity android:name=".SignInActivity">
-
-        </activity>
+        <activity android:name=".SignInActivity"></activity>
         <activity android:name=".signUPActivity" />
         <activity android:name=".MainActivity" />
 

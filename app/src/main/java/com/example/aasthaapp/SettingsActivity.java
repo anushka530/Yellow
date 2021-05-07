@@ -91,7 +91,7 @@ public class SettingsActivity extends AppCompatActivity  {
                         User users = snapshot.getValue(User.class);
                         Picasso.get()
                                 .load(users.getProfilepic())
-                                .placeholder(R.drawable.user)
+                                .placeholder(R.drawable.uploadimg)
                                 .into(binding.profileImage);
 
 
