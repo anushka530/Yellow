@@ -30,8 +30,24 @@ public class aboutActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        binding.btnCare.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent i= new Intent(aboutActivity.this, theripstActivity.class);
+            startActivity(i);
+        }
+    });
+
+        binding.btnX.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i= new Intent(aboutActivity.this, knowusActivity.class);
+                startActivity(i);
+            }
+        });
 
     }
+
     @Override
     public void onBackPressed() {
         finishAffinity();
