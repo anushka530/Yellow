@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.aasthaapp.databinding.ActivityAboutBinding;
 import com.google.firebase.auth.FirebaseAuth;
@@ -43,6 +44,13 @@ public class aboutActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i= new Intent(aboutActivity.this, knowusActivity.class);
                 startActivity(i);
+            }
+        });
+
+        binding.btnPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(aboutActivity.this, "Coming soon ", Toast.LENGTH_SHORT).show();
             }
         });
 
