@@ -23,7 +23,7 @@
         android:layout_centerInParent="true"
         android:layout_marginBottom="40dp"
         android:text="All rights are reserved"
-        android:textColor="#090909"
+        android:textColor="@color/brown"
         android:textSize="18sp"
         android:textStyle="bold" />
 </RelativeLayout>

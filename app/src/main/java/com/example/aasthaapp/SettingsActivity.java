@@ -94,6 +94,7 @@ public class SettingsActivity extends AppCompatActivity  {
 
 
                         binding.etUsername.setText(users.getUsername());
+                        
 
 
                     }
