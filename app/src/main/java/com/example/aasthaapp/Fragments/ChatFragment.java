@@ -72,6 +72,19 @@ public class ChatFragment extends Fragment {
         });
         return binding.getRoot();
     }
+    @Override
+    public void onResume() {
+        String currentId = FirebaseAuth.getInstance().getUid();
+        database.getReference().child("presence").child(currentId).setValue("Online");
+        super.onResume();
+
+    }
+    @Override
+    public void onPause() {
+        String currentId = FirebaseAuth.getInstance().getUid();
+        database.getReference().child("presence").child(currentId).setValue("Offline");
+        super.onPause();
+    }
 
 }
 

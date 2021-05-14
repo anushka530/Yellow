@@ -6,6 +6,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.ImageView;
@@ -25,12 +28,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import java.util.Date;
+import java.util.logging.LogRecord;
 
 
 public class chatDetailActivity extends AppCompatActivity {
@@ -55,6 +60,30 @@ public class chatDetailActivity extends AppCompatActivity {
         String receiveId = getIntent().getStringExtra("userId");
         String userName = getIntent().getStringExtra("username");
         String profilepic = getIntent().getStringExtra("profilePic");
+
+        database.getReference().child("presence").child(receiveId).
+                addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    String status= snapshot.getValue(String.class);
+                    if(!status.isEmpty()) {
+                        if(status.equals("Offline")){
+                            binding.status.setVisibility(View.GONE);
+                        }
+                        else {
+                            binding.status.setText(status);
+                            binding.status.setVisibility(View.VISIBLE);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
         binding.userName.setText(userName);
@@ -99,6 +128,34 @@ public class chatDetailActivity extends AppCompatActivity {
 
                     }
                 });
+        final Handler handler = new Handler();
+        binding.etMessage.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                database.getReference().child("presence").child(senderId).setValue("typing...");
+                handler.removeCallbacksAndMessages(null);
+                handler.postDelayed(userStoppedTyping, 1000);
+
+
+            }
+            Runnable userStoppedTyping = new Runnable() {
+                @Override
+                public void run() {
+                    database.getReference().child("presence").child(senderId).setValue("Online");
+                }
+            };
+        });
 
         binding.send.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,5 +193,17 @@ public class chatDetailActivity extends AppCompatActivity {
         });
 
     }
+    @Override
+    protected void onResume() {
+        String currentId = FirebaseAuth.getInstance().getUid();
+        database.getReference().child("presence").child(currentId).setValue("Online");
+        super.onResume();
 
+    }
+    @Override
+    protected void onPause() {
+        String currentId = FirebaseAuth.getInstance().getUid();
+        database.getReference().child("presence").child(currentId).setValue("Offline");
+        super.onPause();
+    }
 }
