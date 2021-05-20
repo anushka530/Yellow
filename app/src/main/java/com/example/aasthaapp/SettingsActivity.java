@@ -94,8 +94,6 @@ public class SettingsActivity extends AppCompatActivity  {
 
 
                         binding.etUsername.setText(users.getUsername());
-                        
-
 
                     }
 
@@ -140,6 +138,8 @@ public class SettingsActivity extends AppCompatActivity  {
                     });
                 }
             });
+
+
         }
     }
 

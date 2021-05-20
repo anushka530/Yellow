@@ -21,28 +21,34 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
 
+
+
         String title = remoteMessage.getNotification().getTitle();
         String body = remoteMessage.getNotification().getBody();
 
-        NotificationCompat.Builder builder= new NotificationCompat.Builder(getApplicationContext(), "CHAT");
+        NotificationChannel channel = new NotificationChannel("chats", body, NotificationManager.IMPORTANCE_HIGH);
+        channel.setShowBadge(true);
+        channel.enableLights(true);
+        channel.enableVibration(true);
+        channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+
+        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        manager.createNotificationChannel(channel);
+
+
+        NotificationCompat.Builder builder= new NotificationCompat.Builder(getApplicationContext(), "chats");
         builder.setContentTitle(title);
         builder.setContentText(body);
         builder.setSmallIcon(R.drawable.aashaicon);
-
-        Intent intent =new Intent(this, chatDetailActivity.class);
-        intent.putExtra("userId", remoteMessage.getData().get("userID"));
-
-
-        PendingIntent pendingIntent= PendingIntent.getActivity(this,101, intent ,
-                PendingIntent.FLAG_ONE_SHOT);
-        builder.setContentIntent(pendingIntent);
+        builder.setPriority(NotificationCompat.PRIORITY_HIGH);
+        builder.setAutoCancel(true);
+        manager.notify(100, builder.build());
 
 
-        NotificationManager manager= (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        manager.notify(123,builder.build());
     }
 }
