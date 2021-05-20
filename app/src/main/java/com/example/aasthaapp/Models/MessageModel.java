@@ -18,11 +18,8 @@ public class MessageModel {
         this.message = message;
     }
 
-    public MessageModel(){
-
+    public MessageModel() {
     }
-
-
 
     public String getMessageId() {
         return messageId;

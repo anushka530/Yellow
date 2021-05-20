@@ -43,11 +43,13 @@ public class ChatFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
 
         UsersAdapter adapter= new UsersAdapter(list, getContext());
-        binding.chatRecycler.setAdapter(adapter);
+        binding.chatRecyler.setAdapter(adapter);
 
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        binding.chatRecycler.setLayoutManager(layoutManager);
+        binding.chatRecyler.setLayoutManager(layoutManager);
+
+        binding.chatRecyler.showShimmerAdapter();
 
 
         database.getReference().child("Users").addValueEventListener(new ValueEventListener() {
@@ -62,6 +64,7 @@ public class ChatFragment extends Fragment {
                         list.add(users);
                     }
                 }
+                binding.chatRecyler.hideShimmerAdapter();
                 adapter.notifyDataSetChanged();
             }
 

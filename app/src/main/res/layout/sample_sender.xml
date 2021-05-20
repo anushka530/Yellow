@@ -11,13 +11,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
 
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginBottom="5dp"
         android:background="@drawable/bgsender"
         android:maxWidth="310dp"
         android:maxHeight="400dp"
-        android:minHeight="30dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="7dp"
-        android:layout_marginLeft="5dp">
+        android:minHeight="30dp">
 
 
         <androidx.constraintlayout.widget.Guideline
@@ -46,7 +47,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

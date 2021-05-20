@@ -25,8 +25,9 @@ import com.example.aasthaapp.Models.User;
 import com.example.aasthaapp.databinding.ActivityMainBinding;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
-
+import com.google.firebase.messaging.FirebaseMessaging;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     FirebaseAuth auth;
     FirebaseDatabase database;
+    FirebaseUser mUser;
 
 
 
@@ -43,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
         binding= ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         auth= FirebaseAuth.getInstance();
+        mUser=auth.getCurrentUser();
+
+        FirebaseMessaging.getInstance().subscribeToTopic(mUser.getUid());
 
         binding.viewPager.setAdapter(new FragmentAdapter(getSupportFragmentManager()));
         binding.tablayout.setupWithViewPager(binding.viewPager);

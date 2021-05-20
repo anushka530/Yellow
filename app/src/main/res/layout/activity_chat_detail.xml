@@ -29,9 +29,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
             android:layout_marginLeft="3dp"
+
+
             android:layout_weight="1"
-
-
             android:background="@drawable/btedittext"
             android:ems="10"
             android:hint="Type a message"

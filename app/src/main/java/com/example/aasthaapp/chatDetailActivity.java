@@ -1,41 +1,49 @@
 package com.example.aasthaapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Request.Method;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.aasthaapp.Adapters.ChatAdapter;
-import com.example.aasthaapp.Adapters.UsersAdapter;
+
 import com.example.aasthaapp.Models.MessageModel;
 import com.example.aasthaapp.Models.User;
 import com.example.aasthaapp.databinding.ActivityChatDetailBinding;
-
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.LogRecord;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class chatDetailActivity extends AppCompatActivity {
@@ -43,6 +51,13 @@ public class chatDetailActivity extends AppCompatActivity {
     ActivityChatDetailBinding binding;
     FirebaseDatabase database;
     FirebaseAuth auth;
+    String URL ="https://fcm.googleapis.com/fcm/send";
+    RequestQueue requestQueue;
+    String receiveId;
+    String userName;
+    FirebaseUser mUser;
+    String otherUsrName;
+    DatabaseReference mUserRef;
 
 
 
@@ -54,28 +69,21 @@ public class chatDetailActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
+        mUser=auth.getCurrentUser();
+        requestQueue = Volley.newRequestQueue(this);
+        mUserRef= FirebaseDatabase.getInstance().getReference().child("Users");
 
 
         final String senderId = auth.getUid();
-        String receiveId = getIntent().getStringExtra("userId");
-        String userName = getIntent().getStringExtra("username");
+        receiveId = getIntent().getStringExtra("userId");
+        userName = getIntent().getStringExtra("username");
         String profilepic = getIntent().getStringExtra("profilePic");
 
-        database.getReference().child("presence").child(receiveId).
-                addValueEventListener(new ValueEventListener() {
+        mUserRef.child(mUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
-                    String status= snapshot.getValue(String.class);
-                    if(!status.isEmpty()) {
-                        if(status.equals("Offline")){
-                            binding.status.setVisibility(View.GONE);
-                        }
-                        else {
-                            binding.status.setText(status);
-                            binding.status.setVisibility(View.VISIBLE);
-                        }
-                    }
+                    otherUsrName= snapshot.child("username").getValue().toString();
                 }
             }
 
@@ -84,6 +92,30 @@ public class chatDetailActivity extends AppCompatActivity {
 
             }
         });
+
+
+        database.getReference().child("presence").child(receiveId).
+                addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            String status = snapshot.getValue(String.class);
+                            if (!status.isEmpty()) {
+                                if (status.equals("Offline")) {
+                                    binding.status.setVisibility(View.GONE);
+                                } else {
+                                    binding.status.setText(status);
+                                    binding.status.setVisibility(View.VISIBLE);
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
 
 
         binding.userName.setText(userName);
@@ -149,6 +181,7 @@ public class chatDetailActivity extends AppCompatActivity {
 
 
             }
+
             Runnable userStoppedTyping = new Runnable() {
                 @Override
                 public void run() {
@@ -164,10 +197,12 @@ public class chatDetailActivity extends AppCompatActivity {
                     binding.etMessage.setError("Enter your message");
                     return;
                 }
+
                 String message = binding.etMessage.getText().toString();
                 final MessageModel model = new MessageModel(senderId, message);
                 model.setTimestamp(new Date().getTime());
                 binding.etMessage.setText("");
+                sendNotification(message);
 
                 database.getReference().child("chats")
                         .child(senderRoom)
@@ -181,18 +216,61 @@ public class chatDetailActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(Void aVoid) {
 
+
                             }
                         });
 
 
                     }
                 });
-
-
             }
         });
-
     }
+
+    private void sendNotification(String message) {
+        JSONObject jsonObject= new JSONObject();
+        try {
+            jsonObject.put("to","/topics/"+receiveId);
+            JSONObject jsonObject1=new JSONObject();
+            jsonObject1.put("title","Message from " + otherUsrName);
+            jsonObject1.put("body", message);
+
+            JSONObject jsonObject2=new JSONObject();
+            jsonObject2.put("userID", mUser.getUid());
+            jsonObject2.put("type", "message");
+
+            jsonObject.put("notification",jsonObject1);
+            jsonObject.put("data",jsonObject2);
+
+            JsonObjectRequest request=new JsonObjectRequest(Request.Method.POST,URL,jsonObject, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> map=new HashMap<>();
+                    map.put("content-type", "application/json");
+                    map.put("authorization", "key=AAAAhFzeEcI:APA91bGV9LU6jHErO4sOHIOFpo-qlRtaose7xoLdfiN35_HdTPHMCePRJ7p4qoBGhb6sV0xSUD-Tgha2_BV89O4DifoBpFQEcnJ2Mt9lKIH2JEUPcDp3CZlVGq-XGBkW2Btv3zKIfzY7");
+
+                    return map;
+                }
+            };
+            requestQueue.add(request);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     @Override
     protected void onResume() {
         String currentId = FirebaseAuth.getInstance().getUid();
@@ -206,4 +284,6 @@ public class chatDetailActivity extends AppCompatActivity {
         database.getReference().child("presence").child(currentId).setValue("Offline");
         super.onPause();
     }
+
+
 }
