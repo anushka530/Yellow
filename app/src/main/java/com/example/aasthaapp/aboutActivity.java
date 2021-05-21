@@ -53,6 +53,14 @@ public class aboutActivity extends AppCompatActivity {
                 Toast.makeText(aboutActivity.this, "Coming soon ", Toast.LENGTH_SHORT).show();
             }
         });
+        binding.btnPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i= new Intent(aboutActivity.this, PostActivity.class);
+                startActivity(i);
+            }
+        });
+
 
     }
 
