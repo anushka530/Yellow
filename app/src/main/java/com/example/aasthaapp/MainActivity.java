@@ -81,13 +81,6 @@ public class MainActivity extends AppCompatActivity {
 
                 break;
 
-            case R.id.explore:
-                auth.signOut();
-                Intent intent1= new Intent(MainActivity.this,aboutActivity.class);
-                startActivity(intent1);
-
-                break;
-
         }
         return true;
     }

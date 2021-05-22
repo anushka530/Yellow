@@ -6,20 +6,25 @@ import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.aasthaapp.Models.MessageModel;
+import com.example.aasthaapp.Models.User;
 import com.example.aasthaapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class ChatAdapter extends RecyclerView.Adapter  {
+public class ChatAdapter extends RecyclerView.Adapter {
     ArrayList<MessageModel> messageModels;
+
     Context context;
     String recId;
 
@@ -29,7 +34,6 @@ public class ChatAdapter extends RecyclerView.Adapter  {
     public ChatAdapter(ArrayList<MessageModel> messageModels, Context context) {
         this.messageModels = messageModels;
         this.context = context;
-
 
     }
 

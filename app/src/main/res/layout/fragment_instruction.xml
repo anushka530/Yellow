@@ -64,6 +64,20 @@
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/textView10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:fontFamily="monospace"
+        android:padding="3dp"
+        android:text="@string/we_care_about_your_safety_and_privacy_you_can_block_someone_bothering_you_by_clicking_on_the_green_tick"
+        android:textColor="#875F01"
+        android:textSize="13sp"
+        android:textStyle="bold" />
+
+    <TextView
         android:id="@+id/textView8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

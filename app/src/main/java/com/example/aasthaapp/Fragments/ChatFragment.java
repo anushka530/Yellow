@@ -3,6 +3,7 @@ package com.example.aasthaapp.Fragments;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -22,7 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ChatFragment extends Fragment {
+public class ChatFragment extends Fragment  {
 
 
     public ChatFragment() {
@@ -33,6 +34,8 @@ public class ChatFragment extends Fragment {
     ArrayList<User> list = new ArrayList<>();
     FirebaseDatabase database;
     FirebaseAuth auth;
+    UsersAdapter adapter;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -42,7 +45,7 @@ public class ChatFragment extends Fragment {
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
 
-        UsersAdapter adapter= new UsersAdapter(list, getContext());
+        adapter= new UsersAdapter(list, getContext());
         binding.chatRecyler.setAdapter(adapter);
 
 
@@ -73,8 +76,9 @@ public class ChatFragment extends Fragment {
 
             }
         });
+
         return binding.getRoot();
-    }
+        }
     @Override
     public void onResume() {
         String currentId = FirebaseAuth.getInstance().getUid();
@@ -88,6 +92,7 @@ public class ChatFragment extends Fragment {
         database.getReference().child("presence").child(currentId).setValue("Offline");
         super.onPause();
     }
+
 
 }
 

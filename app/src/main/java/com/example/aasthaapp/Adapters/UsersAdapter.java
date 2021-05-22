@@ -41,7 +41,7 @@ import static java.util.Collections.addAll;
 
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.viewHolder> {
 
-    ArrayList<User> list;
+    public ArrayList<User> list;
     Context context;
 
     FirebaseAuth firebaseAuth;
@@ -51,6 +51,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.viewHolder> 
     public UsersAdapter(ArrayList<User> list, Context context) {
         this.list = list;
         this.context = context;
+
 
         firebaseAuth= FirebaseAuth.getInstance();
         myUid= firebaseAuth.getUid();
@@ -223,6 +224,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.viewHolder> 
         return list.size();
 
     }
+
 
     public static class viewHolder extends RecyclerView.ViewHolder {
         ImageView image,blockIv;
