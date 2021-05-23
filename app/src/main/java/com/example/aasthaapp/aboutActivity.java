@@ -51,7 +51,7 @@ public class aboutActivity extends AppCompatActivity {
         binding.btnPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i= new Intent(aboutActivity.this, PostActivity.class);
+                Intent i= new Intent(aboutActivity.this, IntroActivity.class);
                 startActivity(i);
             }
         });

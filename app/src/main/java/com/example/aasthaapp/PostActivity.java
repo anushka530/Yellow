@@ -28,6 +28,7 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -66,6 +67,7 @@ public class PostActivity extends AppCompatActivity implements NavigationView.On
     FirebaseRecyclerAdapter<posts,MyViewHolder>adapter;
     FirebaseRecyclerOptions<posts>options;
     RecyclerView recyclerView;
+    FloatingActionButton floatingActionButton;
 
 
 
@@ -88,6 +90,7 @@ public class PostActivity extends AppCompatActivity implements NavigationView.On
         recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         postImageRef = FirebaseStorage.getInstance().getReference().child("PostImages");
+        floatingActionButton=findViewById(R.id.floatingActionButton);
 
 
 
@@ -99,6 +102,13 @@ public class PostActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View v) {
                 AddPost();
 
+            }
+        });
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(PostActivity.this, SettingsActivity.class);
+                startActivity(i);
             }
         });
         addImagePost.setOnClickListener(new View.OnClickListener() {
@@ -191,9 +201,6 @@ public class PostActivity extends AppCompatActivity implements NavigationView.On
         if(postDesc.isEmpty()){
             inputPostDesc.setError("please write something");
         }
-        else if(imageUri == null){
-            Toast.makeText(this, "please select image", Toast.LENGTH_SHORT).show();
-        }
         else{
             mLoadingBar.setTitle("Adding Post");
             mLoadingBar.setCanceledOnTouchOutside(false);
@@ -266,5 +273,12 @@ public class PostActivity extends AppCompatActivity implements NavigationView.On
         return false;
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(PostActivity.this, aboutActivity.class);
+        startActivity(i);
+        super.onBackPressed();
     }
 }

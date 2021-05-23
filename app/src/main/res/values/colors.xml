@@ -11,5 +11,7 @@
     <color name="grayBackground">#b3bac4</color>
     <color name="brown">#875F01</color>
     <color name="setting_bg">#cac7af</color>
+    <color name="pink">#E9DDEC</color>
+    <color name="blue">#70D6F9</color>
 
 </resources>
