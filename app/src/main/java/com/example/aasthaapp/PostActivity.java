@@ -201,6 +201,10 @@ public class PostActivity extends AppCompatActivity implements NavigationView.On
         if(postDesc.isEmpty()){
             inputPostDesc.setError("please write something");
         }
+        else if(imageUri==null){
+            Toast.makeText(this, "Please select image", Toast.LENGTH_SHORT).show();
+
+        }
         else{
             mLoadingBar.setTitle("Adding Post");
             mLoadingBar.setCanceledOnTouchOutside(false);

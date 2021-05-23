@@ -108,7 +108,7 @@ public class SlideViewPagerAdapter extends PagerAdapter {
                 ind3.setImageResource(R.drawable.selected);
 
                 title.setText("No Comment or Like Feature");
-                desc.setText("We have avoided comment and like feature as it does not help in our motive in anyway.");
+                desc.setText("We have avoided comment and like feature as it does not help our motive in anyway.");
 
 
                 back.setVisibility(View.VISIBLE);
