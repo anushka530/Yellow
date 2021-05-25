@@ -224,6 +224,11 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.viewHolder> 
         return list.size();
 
     }
+    public void setFilter(ArrayList<User> userArrayList){
+        list=new ArrayList<>();
+        list.addAll(userArrayList);
+        notifyDataSetChanged();
+    }
 
 
     public static class viewHolder extends RecyclerView.ViewHolder {
