@@ -1,17 +1,16 @@
 package com.example.aasthaapp.Models;
 
 public class User {
-    String profilepic, username, mail, password, userId, lastMesaage , category;
+    String profilepic, username, mail, password, userId, lastMesaage ;
     boolean isBlocked=false;
 
-    public User(String profilepic, String username, String mail, String password, String userId, String lastMesaage, String category, String spinner, boolean isBlocked) {
+    public User(String profilepic, String username, String mail, String password, String userId, String lastMesaage, String spinner, boolean isBlocked) {
         this.profilepic = profilepic;
         this.username = username;
         this.mail = mail;
         this.password = password;
         this.userId = userId;
         this.lastMesaage = lastMesaage;
-        this.category = category;
         this.isBlocked = isBlocked;
     }
 
@@ -32,14 +31,6 @@ public class User {
     public User(String username, String profilepic){
         this.username=username;
         this.profilepic=profilepic;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public boolean isBlocked() {

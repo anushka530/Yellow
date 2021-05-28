@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,6 +18,8 @@ import android.widget.Toast;
 
 import com.example.aasthaapp.Models.User;
 import com.example.aasthaapp.databinding.ActivitySettingsBinding;
+
+import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -47,10 +52,35 @@ public class SettingsActivity extends AppCompatActivity  {
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
 
-        Spinner mySpinner = findViewById(R.id.spinner);
-        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.names, R.layout.color_spinner);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mySpinner.setAdapter(adapter);
+        binding.logoutSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(SettingsActivity.this)
+                        .setIcon(R.drawable.ic_baseline_warning_24)
+                        .setTitle("Logout")
+                        .setMessage("Are you sure you want to logout")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                auth.signOut();
+                                Intent intent= new Intent(SettingsActivity.this,SignInActivity.class);
+                                startActivity(intent);
+
+                            }
+                        }).setNeutralButton("Help", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(SettingsActivity.this, "Press Yes to logout", Toast.LENGTH_SHORT).show();
+                    }
+                }) .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+                    }
+                }) .show();
+            }
+        });
 
 
         binding.arrow.setOnClickListener(new View.OnClickListener() {
@@ -62,15 +92,17 @@ public class SettingsActivity extends AppCompatActivity  {
         });
 
         binding.saveButton.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View v) {
-                String category = binding.spinner.getSelectedItem().toString();
+
                 String username = binding.etUsername.getText().toString();
 
                 // to update value
                 HashMap<String, Object> obj = new HashMap<>();
                 obj.put("username", username);
-                obj.put("category", category);
+
 
                 database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
                         .updateChildren(obj);
@@ -102,16 +134,19 @@ public class SettingsActivity extends AppCompatActivity  {
 
                     }
                 });
-
         binding.plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent();
-                i.setAction(Intent.ACTION_GET_CONTENT);
-                i.setType("image/*"); // */*
-                startActivityForResult(i, 33);
+                ImagePicker.with(SettingsActivity.this)
+                        .crop()	    			//Crop image(Optional), Check Customization for more option
+                        .compress(1024)			//Final image size will be less than 1 MB(Optional)
+                        .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
+                        .start();
+
             }
         });
+
+
     }
 
     @Override

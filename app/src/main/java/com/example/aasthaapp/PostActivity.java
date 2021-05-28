@@ -3,7 +3,7 @@ package com.example.aasthaapp;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,6 +26,8 @@ import android.widget.Toast;
 import com.example.aasthaapp.Utils.posts;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+
+import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -50,22 +53,21 @@ import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class PostActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
-    DrawerLayout drawerLayout;
-    NavigationView navigationView;
+public class PostActivity extends AppCompatActivity {
+
     ImageView addImagePost, sendImagePost;
     EditText inputPostDesc;
     FirebaseAuth mAuth;
     FirebaseUser mUser;
     DatabaseReference mUserRef, postRef;
     Uri imageUri;
-    String profileImageUrlV , usernameV;
+    String profileImageUrlV, usernameV;
     ProgressDialog mLoadingBar;
     StorageReference postImageRef;
     CircleImageView profileImageHeader;
     TextView usernameHeader;
-    FirebaseRecyclerAdapter<posts,MyViewHolder>adapter;
-    FirebaseRecyclerOptions<posts>options;
+    FirebaseRecyclerAdapter<posts, MyViewHolder> adapter;
+    FirebaseRecyclerOptions<posts> options;
     RecyclerView recyclerView;
     FloatingActionButton floatingActionButton;
 
@@ -77,8 +79,6 @@ public class PostActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_post);
 
 
-        drawerLayout = findViewById(R.id.drawerlayout);
-        navigationView = findViewById(R.id.navView);
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
         mUserRef = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -90,12 +90,11 @@ public class PostActivity extends AppCompatActivity implements NavigationView.On
         recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         postImageRef = FirebaseStorage.getInstance().getReference().child("PostImages");
-        floatingActionButton=findViewById(R.id.floatingActionButton);
+        floatingActionButton = findViewById(R.id.floatingActionButton);
 
 
 
-        View view = navigationView.inflateHeaderView(R.layout.drawer_header);
-        navigationView.setNavigationItemSelectedListener(this);
+
 
         sendImagePost.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +103,8 @@ public class PostActivity extends AppCompatActivity implements NavigationView.On
 
             }
         });
+
+
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,18 +114,20 @@ public class PostActivity extends AppCompatActivity implements NavigationView.On
         });
         addImagePost.setOnClickListener(new View.OnClickListener() {
             @Override
-                public void onClick(View v) {
-                    Intent i = new Intent();
-                    i.setAction(Intent.ACTION_GET_CONTENT);
-                    i.setType("image/"); // */
-                    startActivityForResult(i,33);
+            public void onClick(View v) {
+                ImagePicker.with(PostActivity.this)
+                        .crop()	    			//Crop image(Optional), Check Customization for more option
+                        .compress(1024)			//Final image size will be less than 1 MB(Optional)
+                        .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
+                        .start(33);
 
-                }
+            }
         });
         LoadPost();
 
-
     }
+
+
 
     private void LoadPost() {
         options = new FirebaseRecyclerOptions.Builder<posts>().setQuery(postRef, posts.class).build();
@@ -137,13 +140,12 @@ public class PostActivity extends AppCompatActivity implements NavigationView.On
                 Picasso.get().load(model.getProfilepic()).placeholder(R.drawable.user).into(holder.profileImage);
 
 
-
             }
 
             @NonNull
             @Override
             public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_view_post,parent,false);
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_view_post, parent, false);
                 return new MyViewHolder(view);
             }
         };
@@ -154,14 +156,13 @@ public class PostActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onStart() {
         super.onStart();
-        if(mUser==null){
+        if (mUser == null) {
             SendUserToLoginActivity();
-        }
-        else{
+        } else {
             mUserRef.child(mUser.getUid()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if(snapshot.exists()) {
+                    if (snapshot.exists()) {
 
                         profileImageUrlV = snapshot.child("profilepic").getValue().toString();
                         usernameV = snapshot.child("username").getValue().toString();
@@ -179,7 +180,7 @@ public class PostActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void SendUserToLoginActivity() {
-        Intent intent = new Intent(PostActivity.this,SignInActivity.class);
+        Intent intent = new Intent(PostActivity.this, SignInActivity.class);
         startActivity(intent);
         finish();
     }
@@ -187,7 +188,7 @@ public class PostActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==33 && resultCode==RESULT_OK && data!=null){
+        if (requestCode == 33 && resultCode == RESULT_OK && data != null) {
             imageUri = data.getData();
             addImagePost.setImageURI(imageUri);
 
@@ -198,14 +199,12 @@ public class PostActivity extends AppCompatActivity implements NavigationView.On
 
     private void AddPost() {
         String postDesc = inputPostDesc.getText().toString();
-        if(postDesc.isEmpty()){
+        if (postDesc.isEmpty()) {
             inputPostDesc.setError("please write something");
-        }
-        else if(imageUri==null){
+        } else if (imageUri == null) {
             Toast.makeText(this, "Please select image", Toast.LENGTH_SHORT).show();
 
-        }
-        else{
+        } else {
             mLoadingBar.setTitle("Adding Post");
             mLoadingBar.setCanceledOnTouchOutside(false);
             mLoadingBar.show();
@@ -214,30 +213,29 @@ public class PostActivity extends AppCompatActivity implements NavigationView.On
             SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
             String strDate = formatter.format(date);
 
-            postImageRef.child(mUser.getUid()+strDate).putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+            postImageRef.child(mUser.getUid() + strDate).putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                    if(task.isSuccessful()){
-                        postImageRef.child(mUser.getUid()+strDate).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    if (task.isSuccessful()) {
+                        postImageRef.child(mUser.getUid() + strDate).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
-                                HashMap hashMap  = new HashMap();
-                                hashMap.put("datePost",strDate);
-                                hashMap.put("postImageUrl",uri.toString());
-                                hashMap.put("postDesc",postDesc);
-                                hashMap.put("profilepic",profileImageUrlV);
+                                HashMap hashMap = new HashMap();
+                                hashMap.put("datePost", strDate);
+                                hashMap.put("postImageUrl", uri.toString());
+                                hashMap.put("postDesc", postDesc);
+                                hashMap.put("profilepic", profileImageUrlV);
                                 hashMap.put("username", usernameV);
-                                postRef.child(mUser.getUid()+strDate).updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener() {
+                                postRef.child(mUser.getUid() + strDate).updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener() {
                                     @Override
                                     public void onComplete(@NonNull Task task) {
-                                        if(task.isSuccessful()){
+                                        if (task.isSuccessful()) {
                                             mLoadingBar.dismiss();
-                                            Toast.makeText(PostActivity.this,"post added",Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(PostActivity.this, "post added", Toast.LENGTH_SHORT).show();
                                             addImagePost.setImageResource(R.drawable.ic_add_post_image);
                                             inputPostDesc.setText("");
-                                        }
-                                        else{
-                                            Toast.makeText(PostActivity.this, ""+task.getException().toString(), Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(PostActivity.this, "" + task.getException().toString(), Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });
@@ -246,10 +244,9 @@ public class PostActivity extends AppCompatActivity implements NavigationView.On
                             }
 
                         });
-                    }
-                    else{
+                    } else {
                         mLoadingBar.dismiss();
-                        Toast.makeText(PostActivity.this,""+task.getException().toString(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PostActivity.this, "" + task.getException().toString(), Toast.LENGTH_SHORT).show();
 
 
                     }
@@ -259,25 +256,6 @@ public class PostActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.home:
-                Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.article:
-                Toast.makeText(this, "Coming Soon", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.logout:
-                Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
-                break;
-
-
-        }
-        return false;
-
-
-    }
 
     @Override
     public void onBackPressed() {

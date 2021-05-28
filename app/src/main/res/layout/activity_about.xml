@@ -52,8 +52,6 @@
                 android:id="@+id/tvChat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginLeft="40dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="CHAT"
@@ -65,11 +63,9 @@
                 android:id="@+id/tvCare"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginLeft="50dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="MENTAL HEALTH CARE"
+                android:text="CALM DOWN"
                 android:textColor="#875F01"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -102,7 +98,7 @@
                 android:layout_marginEnd="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
-                android:drawableTop="@drawable/ic_support" />
+                android:drawableTop="@drawable/ic_creative" />
         </LinearLayout>
 
         <LinearLayout
@@ -115,8 +111,7 @@
                 android:id="@+id/tvPost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="20dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="POST"
@@ -128,9 +123,10 @@
                 android:id="@+id/tvcontact"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="ABOUT US"
+                android:text="YOU'LL BE FINE"
                 android:textColor="#875F01"
                 android:textSize="14sp"
                 android:textStyle="bold" />
