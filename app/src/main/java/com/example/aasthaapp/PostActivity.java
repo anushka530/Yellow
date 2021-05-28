@@ -263,10 +263,13 @@ public class PostActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.home:
-                Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "therapist", Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.article:
-                Toast.makeText(this, "Coming Soon", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "about us", Toast.LENGTH_SHORT).show();
+
+
                 break;
             case R.id.logout:
                 Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();

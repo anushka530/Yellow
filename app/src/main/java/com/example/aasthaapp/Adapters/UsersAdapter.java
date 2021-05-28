@@ -1,13 +1,12 @@
 package com.example.aasthaapp.Adapters;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,10 +15,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.aasthaapp.Models.User;
+import com.example.aasthaapp.Music;
 import com.example.aasthaapp.R;
 import com.example.aasthaapp.chatDetailActivity;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,14 +28,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
-
-import static com.google.firebase.database.core.RepoManager.clear;
-import static java.util.Collections.addAll;
 
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.viewHolder> {
 
@@ -53,34 +45,34 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.viewHolder> 
         this.context = context;
 
 
-        firebaseAuth= FirebaseAuth.getInstance();
-        myUid= firebaseAuth.getUid();
+        firebaseAuth = FirebaseAuth.getInstance();
+        myUid = firebaseAuth.getUid();
 
     }
 
     @NonNull
     @Override
     public viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(context).inflate(R.layout.sample_show_user, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.sample_show_user, parent, false);
 
         return new viewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
-        User users= list.get(position);
+        User users = list.get(position);
 
         Picasso.get().load(users.getProfilepic()).placeholder(R.drawable.user).into(holder.image);
         holder.userName.setText(users.getUsername());
 
-        FirebaseDatabase.getInstance().getReference().child("chats").child(FirebaseAuth.getInstance().getUid()+ users.getUserId())
+        FirebaseDatabase.getInstance().getReference().child("chats").child(FirebaseAuth.getInstance().getUid() + users.getUserId())
                 .orderByChild("timestamp")
                 .limitToLast(1)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(snapshot.hasChildren()){
-                            for(DataSnapshot snapshot1:snapshot.getChildren()){
+                        if (snapshot.hasChildren()) {
+                            for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                                 holder.lastMessage.setText(snapshot1.child("message").getValue().toString());
                             }
                         }
@@ -92,24 +84,23 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.viewHolder> 
                     }
                 });
         holder.blockIv.setImageResource(R.drawable.ic_baseline_check_circle_24);
-        checkIsBlocked(users.getUserId(), holder,position);
+        checkIsBlocked(users.getUserId(), holder, position);
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                imBlockedORNot(users.getUserId(),users.getProfilepic(),users.getUsername());
+                imBlockedORNot(users.getUserId(), users.getProfilepic(), users.getUsername());
             }
         });
 
         holder.blockIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(list.get(position).isBlocked()){
+                if (list.get(position).isBlocked()) {
                     unBlockUser(users.getUserId());
-                }
-                else{
+                } else {
                     blockUser(users.getUserId());
                 }
             }
@@ -123,13 +114,13 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.viewHolder> 
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for(DataSnapshot ds: snapshot.getChildren()) {
+                        for (DataSnapshot ds : snapshot.getChildren()) {
                             if (ds.exists()) {
                                 Toast.makeText(context, "You are blocked by the user, can't send message", Toast.LENGTH_SHORT).show();
                                 return;
                             }
                         }
-                        Intent intent= new Intent(context, chatDetailActivity.class);
+                        Intent intent = new Intent(context, chatDetailActivity.class);
                         intent.putExtra("userId", userId);
                         intent.putExtra("profilePic", profilepic);
                         intent.putExtra("username", username);
@@ -152,11 +143,11 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.viewHolder> 
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for(DataSnapshot ds: snapshot.getChildren()){
-                           if(ds.exists()){
-                               holder.blockIv.setImageResource(R.drawable.ic_baseline_block_24);
-                               list.get(position).setBlocked(true);
-                           }
+                        for (DataSnapshot ds : snapshot.getChildren()) {
+                            if (ds.exists()) {
+                                holder.blockIv.setImageResource(R.drawable.ic_baseline_block_24);
+                                list.get(position).setBlocked(true);
+                            }
                         }
                     }
 
@@ -169,10 +160,10 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.viewHolder> 
 
     private void blockUser(String userId) {
 
-        HashMap<String,String> hashmap= new HashMap<>();
+        HashMap<String, String> hashmap = new HashMap<>();
         hashmap.put("userId", userId);
 
-        DatabaseReference ref= FirebaseDatabase.getInstance().getReference("Users");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
         ref.child(myUid).child("BlockedUsers").child(userId).setValue(hashmap)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -182,19 +173,19 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.viewHolder> 
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(context, "Failed:" +e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Failed:" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void unBlockUser(String userId) {
-        DatabaseReference ref= FirebaseDatabase.getInstance().getReference("Users");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
         ref.child(myUid).child("BlockedUsers").orderByChild("userId").equalTo(userId)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for(DataSnapshot ds: snapshot.getChildren()){
-                            if(ds.exists()){
+                        for (DataSnapshot ds : snapshot.getChildren()) {
+                            if (ds.exists()) {
                                 ds.getRef().removeValue()
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
@@ -204,7 +195,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.viewHolder> 
                                         }).addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(context, "Failed:" +e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(context, "Failed:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
                                 });
                             }
@@ -224,24 +215,25 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.viewHolder> 
         return list.size();
 
     }
-    public void setFilter(ArrayList<User> userArrayList){
-        list=new ArrayList<>();
+
+    public void setFilter(ArrayList<User> userArrayList) {
+        list = new ArrayList<>();
         list.addAll(userArrayList);
         notifyDataSetChanged();
     }
 
 
     public static class viewHolder extends RecyclerView.ViewHolder {
-        ImageView image,blockIv;
+        ImageView image, blockIv;
         TextView userName, lastMessage;
 
         public viewHolder(@NonNull View itemView) {
             super(itemView);
 
-            image= itemView.findViewById(R.id.profileImages);
-            blockIv= itemView.findViewById(R.id.blockIv);
-            userName= itemView.findViewById(R.id.username);
-            lastMessage= itemView.findViewById(R.id.LastMessage);
+            image = itemView.findViewById(R.id.profileImages);
+            blockIv = itemView.findViewById(R.id.blockIv);
+            userName = itemView.findViewById(R.id.username);
+            lastMessage = itemView.findViewById(R.id.LastMessage);
 
         }
     }

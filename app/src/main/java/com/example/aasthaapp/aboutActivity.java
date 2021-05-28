@@ -34,7 +34,7 @@ public class aboutActivity extends AppCompatActivity {
         binding.btnCare.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent i= new Intent(aboutActivity.this, theripstActivity.class);
+            Intent i= new Intent(aboutActivity.this, MusicActivity.class);
             startActivity(i);
         }
     });
@@ -42,7 +42,7 @@ public class aboutActivity extends AppCompatActivity {
         binding.btnX.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i= new Intent(aboutActivity.this, knowusActivity.class);
+                Intent i= new Intent(aboutActivity.this, TipsActivity.class);
                 startActivity(i);
             }
         });

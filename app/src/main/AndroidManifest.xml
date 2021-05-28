@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.AasthaApp">
-        <activity android:name=".IntroActivity"></activity>
+        <activity android:name=".TipsActivity"></activity>
+        <activity android:name=".MusicActivity" />
+        <activity android:name=".IntroActivity" />
         <activity android:name=".PostActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".splashActivity">
@@ -21,8 +23,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".knowusActivity" />
-        <activity android:name=".theripstActivity" />
         <activity android:name=".chatDetailActivity" />
         <activity android:name=".aboutActivity" />
         <activity android:name=".SignInActivity" />
