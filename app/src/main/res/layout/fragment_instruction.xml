@@ -21,6 +21,13 @@
         android:textSize="13sp"
         android:textStyle="bold" />
 
+    <View
+        android:id="@+id/view5"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="2dp"
+        android:background="@color/setting_bg" />
+
     <TextView
         android:id="@+id/textView4"
         android:layout_width="match_parent"
@@ -34,6 +41,13 @@
         android:textColor="#875F01"
         android:textSize="13sp"
         android:textStyle="bold" />
+
+    <View
+        android:id="@+id/view6"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="2dp"
+        android:background="@color/setting_bg" />
 
     <TextView
         android:id="@+id/textView6"
@@ -49,6 +63,13 @@
         android:textSize="13sp"
         android:textStyle="bold" />
 
+    <View
+        android:id="@+id/view7"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="2dp"
+        android:background="@color/setting_bg" />
+
     <TextView
         android:id="@+id/textView10"
         android:layout_width="match_parent"
@@ -62,6 +83,13 @@
         android:textColor="#875F01"
         android:textSize="13sp"
         android:textStyle="bold" />
+
+    <View
+        android:id="@+id/view8"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="2dp"
+        android:background="@color/setting_bg" />
 
     <TextView
         android:id="@+id/textView8"
@@ -77,6 +105,13 @@
         android:textSize="13sp"
         android:textStyle="bold" />
 
+    <View
+        android:id="@+id/view9"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="2dp"
+        android:background="@color/setting_bg" />
+
     <TextView
         android:id="@+id/textView9"
         android:layout_width="match_parent"
@@ -90,5 +125,12 @@
         android:textColor="#875F01"
         android:textSize="13sp"
         android:textStyle="bold" />
+
+    <View
+        android:id="@+id/view10"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="2dp"
+        android:background="@color/setting_bg" />
 
 </LinearLayout>

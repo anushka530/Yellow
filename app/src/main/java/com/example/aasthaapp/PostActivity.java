@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import androidx.drawerlayout.widget.DrawerLayout;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,13 +14,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
+
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
+
 import android.widget.Toast;
 
 import com.example.aasthaapp.Utils.posts;
@@ -32,7 +32,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -50,8 +50,8 @@ import org.w3c.dom.Text;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Objects;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PostActivity extends AppCompatActivity {
 
@@ -64,8 +64,6 @@ public class PostActivity extends AppCompatActivity {
     String profileImageUrlV, usernameV;
     ProgressDialog mLoadingBar;
     StorageReference postImageRef;
-    CircleImageView profileImageHeader;
-    TextView usernameHeader;
     FirebaseRecyclerAdapter<posts, MyViewHolder> adapter;
     FirebaseRecyclerOptions<posts> options;
     RecyclerView recyclerView;
@@ -162,11 +160,14 @@ public class PostActivity extends AppCompatActivity {
             mUserRef.child(mUser.getUid()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()) {
+                    try{
+                        if (snapshot.exists()) {
+                            profileImageUrlV = snapshot.child("profilepic").getValue().toString();
+                            usernameV = snapshot.child("username").getValue().toString();
+                        }
 
-                        profileImageUrlV = snapshot.child("profilepic").getValue().toString();
-                        usernameV = snapshot.child("username").getValue().toString();
-
+                    }
+                    catch (NullPointerException ignored){
 
                     }
                 }
