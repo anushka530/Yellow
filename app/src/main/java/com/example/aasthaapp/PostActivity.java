@@ -164,8 +164,18 @@ public class PostActivity extends AppCompatActivity {
 
                     try{
                         if (snapshot.exists()) {
-                            profileImageUrlV = snapshot.child("profilepic").getValue().toString();
+
                             usernameV = snapshot.child("username").getValue().toString();
+                        }
+
+                    }
+                    catch (NullPointerException ignored){
+
+                    }
+                    try{
+                        if (snapshot.exists()) {
+                            profileImageUrlV = snapshot.child("profilepic").getValue().toString();
+
                         }
 
                     }

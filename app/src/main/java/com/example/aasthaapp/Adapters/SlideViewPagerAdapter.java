@@ -81,8 +81,8 @@ public class SlideViewPagerAdapter extends PagerAdapter {
                 ind1.setImageResource(R.drawable.selected);
                 ind2.setImageResource(R.drawable.unselected);
                 ind3.setImageResource(R.drawable.unselected);
-                title.setText("We Are Together");
-                desc.setText("No need to struggle in silence anymore.");
+                title.setText("Update username before posting anything");
+                desc.setText("Please go to settings and update your username by clicking on the save button before posting anything here. We get you, no need to struggle in silence anymore.");
                 back.setVisibility(View.GONE);
                 next.setVisibility(View.VISIBLE);
                 break;
