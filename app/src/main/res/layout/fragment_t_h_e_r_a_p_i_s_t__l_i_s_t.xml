@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="#ffff"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="@dimen/_20mdp"
         >
         <TextView
             android:layout_width="match_parent"
