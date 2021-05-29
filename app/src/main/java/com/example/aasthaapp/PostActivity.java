@@ -94,6 +94,7 @@ public class PostActivity extends AppCompatActivity {
 
 
 
+
         sendImagePost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -160,6 +161,7 @@ public class PostActivity extends AppCompatActivity {
             mUserRef.child(mUser.getUid()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                     try{
                         if (snapshot.exists()) {
                             profileImageUrlV = snapshot.child("profilepic").getValue().toString();
@@ -170,6 +172,8 @@ public class PostActivity extends AppCompatActivity {
                     catch (NullPointerException ignored){
 
                     }
+
+
                 }
 
                 @Override
