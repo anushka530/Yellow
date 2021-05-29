@@ -21,17 +21,18 @@ public class MusicActivity extends AppCompatActivity {
 
         arrayList = new ArrayList<>();
         songList = (ListView) findViewById(R.id.song_list);
-        arrayList.add(new Music("cam_giac_yeu", R.raw.cam_giac_yeu));
-        arrayList.add(new Music("can_vong_tinh_yeh", R.raw.cau_vong_tinh_yeu));
+        arrayList.add(new Music("cam_giac_yeu", R.raw.cam));
+        arrayList.add(new Music("can_vong_tinh_yeh", R.raw.cau));
         arrayList.add(new Music("tan", R.raw.tan));
-        arrayList.add(new Music("instrumental ", R.raw.music1));
-        arrayList.add(new Music("piano-in-the-great-hall", R.raw.music2));
-        arrayList.add(new Music("deep_meditation", R.raw.music3));
-        arrayList.add(new Music("inner_peace", R.raw.music5));
-        arrayList.add(new Music("relaxing_bird_sound", R.raw.music6));
-        arrayList.add(new Music("wqt_ki_baatein", R.raw.music7));
-        arrayList.add(new Music("divine_maha_mantra", R.raw.music8));
-        arrayList.add(new Music("relax", R.raw.music9));
+        arrayList.add(new Music("instrumental ", R.raw.instrument));
+        arrayList.add(new Music("piano-in-the-great-hall", R.raw.pianoingreathall))
+        ;
+        arrayList.add(new Music("deep_meditation", R.raw.deepmeditation));
+        arrayList.add(new Music("inner_peace", R.raw.innerpeace));
+        arrayList.add(new Music("relaxing_bird_sound", R.raw.birdsound));
+        arrayList.add(new Music("wqt_ki_baatein", R.raw.wqtkibaatein));
+        arrayList.add(new Music("divine_maha_mantra", R.raw.divinemahamantra));
+        arrayList.add(new Music("relax", R.raw.relax));
 
 
 
