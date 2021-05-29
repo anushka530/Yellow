@@ -14,7 +14,12 @@
         <activity android:name=".TipsActivity"></activity>
         <activity android:name=".MusicActivity" />
         <activity android:name=".IntroActivity" />
-        <activity android:name=".PostActivity" />
+        <activity android:name=".PostActivity" >
+
+        </activity>
+
+
+
         <activity android:name=".SettingsActivity" />
         <activity android:name=".splashActivity">
             <intent-filter>
@@ -22,6 +27,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity android:name=".chatDetailActivity" />
         <activity android:name=".aboutActivity" />
