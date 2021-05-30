@@ -1,17 +1,16 @@
 package com.example.aasthaapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.widget.ListView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.aasthaapp.Adapters.CustomMusicAdapter;
-import com.example.aasthaapp.Adapters.UsersAdapter;
 
 import java.util.ArrayList;
 
 public class MusicActivity extends AppCompatActivity {
-    private ArrayList<Music> arrayList;
+    ArrayList<Music> arrayList;
     CustomMusicAdapter adapter;
     private ListView songList;
     @Override
@@ -21,12 +20,11 @@ public class MusicActivity extends AppCompatActivity {
 
         arrayList = new ArrayList<>();
         songList = (ListView) findViewById(R.id.song_list);
-        arrayList.add(new Music("cam_giac_yeu", R.raw.cam));
-        arrayList.add(new Music("can_vong_tinh_yeh", R.raw.cau));
-        arrayList.add(new Music("tan", R.raw.tan));
-        arrayList.add(new Music("instrumental ", R.raw.instrument));
-        arrayList.add(new Music("piano-in-the-great-hall", R.raw.pianoingreathall))
-        ;
+        arrayList.add(new Music("Tajdar-E-Haram", R.raw.tajdar));
+        arrayList.add(new Music("orbital", R.raw.orbital));
+        arrayList.add(new Music("monsoon", R.raw.monsoon));
+        arrayList.add(new Music("moonchild", R.raw.moonchild));
+        arrayList.add(new Music("piano-in-the-great-hall", R.raw.pianoingreathall));
         arrayList.add(new Music("deep_meditation", R.raw.deepmeditation));
         arrayList.add(new Music("inner_peace", R.raw.innerpeace));
         arrayList.add(new Music("relaxing_bird_sound", R.raw.birdsound));
