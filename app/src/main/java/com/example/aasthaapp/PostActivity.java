@@ -70,6 +70,8 @@ public class PostActivity extends AppCompatActivity {
     FirebaseRecyclerOptions<posts> options;
     RecyclerView recyclerView;
     FloatingActionButton floatingActionButton;
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
 
 
 
@@ -91,6 +93,7 @@ public class PostActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         postImageRef = FirebaseStorage.getInstance().getReference().child("PostImages");
         floatingActionButton = findViewById(R.id.floatingActionButton);
+
 
 
 
@@ -163,9 +166,16 @@ public class PostActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
+                        try{
+                            profileImageUrlV = snapshot.child("profilepic").getValue().toString();
+                            usernameV = snapshot.child("username").getValue().toString();
 
-                        profileImageUrlV = snapshot.child("profilepic").getValue().toString();
-                        usernameV = snapshot.child("username").getValue().toString();
+                        }
+                        catch (NullPointerException ignored){
+
+                        }
+
+
 
 
                     }
