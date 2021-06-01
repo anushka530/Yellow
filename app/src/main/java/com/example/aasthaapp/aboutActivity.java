@@ -9,12 +9,14 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.aasthaapp.databinding.ActivityAboutBinding;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class aboutActivity extends AppCompatActivity {
     ActivityAboutBinding binding;
     FirebaseAuth auth;
+    FloatingActionButton floatingActionButton;
 
 
     @Override
@@ -23,6 +25,17 @@ public class aboutActivity extends AppCompatActivity {
         binding = ActivityAboutBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         getSupportActionBar().hide();
+
+
+        floatingActionButton = findViewById(R.id.floatingActionButton);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(aboutActivity.this, SettingsActivity.class);
+                startActivity(i);
+            }
+        });
+
 
         binding.btnChat.setOnClickListener(new View.OnClickListener() {
             @Override

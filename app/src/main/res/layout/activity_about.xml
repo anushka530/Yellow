@@ -135,4 +135,29 @@
 
     </LinearLayout>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linearVertical"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/_30mdp"
+        android:layout_marginEnd="@dimen/_50mdp"
+        android:clickable="true"
+        app:backgroundTint="@color/purple_200"
+        app:srcCompat="@drawable/profile" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/floatingActionButton"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/_5mdp"
+        android:layout_marginRight="@dimen/_50mdp"
+        android:textColor="#875F01"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:text="PROFILE" />
+
 </RelativeLayout>

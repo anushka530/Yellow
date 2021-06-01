@@ -67,7 +67,7 @@ public class PostActivity extends AppCompatActivity {
     FirebaseRecyclerAdapter<posts, MyViewHolder> adapter;
     FirebaseRecyclerOptions<posts> options;
     RecyclerView recyclerView;
-    FloatingActionButton floatingActionButton;
+
 
 
 
@@ -88,7 +88,6 @@ public class PostActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         postImageRef = FirebaseStorage.getInstance().getReference().child("PostImages");
-        floatingActionButton = findViewById(R.id.floatingActionButton);
 
 
 
@@ -104,13 +103,7 @@ public class PostActivity extends AppCompatActivity {
         });
 
 
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(PostActivity.this, SettingsActivity.class);
-                startActivity(i);
-            }
-        });
+
         addImagePost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
