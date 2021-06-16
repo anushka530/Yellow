@@ -26,6 +26,8 @@ import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.example.aasthaapp.Adapters.UsersAdapter;
+import com.example.aasthaapp.Models.User;
 import com.example.aasthaapp.Utils.posts;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -72,8 +74,6 @@ public class PostActivity extends AppCompatActivity {
     RecyclerView recyclerView;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,11 +93,6 @@ public class PostActivity extends AppCompatActivity {
         postImageRef = FirebaseStorage.getInstance().getReference().child("PostImages");
 
 
-
-
-
-
-
         sendImagePost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,14 +102,13 @@ public class PostActivity extends AppCompatActivity {
         });
 
 
-
         addImagePost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ImagePicker.with(PostActivity.this)
-                        .crop()	    			//Crop image(Optional), Check Customization for more option
-                        .compress(1024)			//Final image size will be less than 1 MB(Optional)
-                        .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
+                        .crop()                    //Crop image(Optional), Check Customization for more option
+                        .compress(1024)            //Final image size will be less than 1 MB(Optional)
+                        .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
                         .start(33);
 
             }
@@ -122,7 +116,6 @@ public class PostActivity extends AppCompatActivity {
         LoadPost();
 
     }
-
 
 
     private void LoadPost() {
@@ -152,7 +145,7 @@ public class PostActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-     
+
         if (mUser == null) {
             SendUserToLoginActivity();
         } else {
@@ -160,24 +153,22 @@ public class PostActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                    try{
+                    try {
                         if (snapshot.exists()) {
 
                             usernameV = snapshot.child("username").getValue().toString();
                         }
 
-                    }
-                    catch (NullPointerException ignored){
+                    } catch (NullPointerException ignored) {
 
                     }
-                    try{
+                    try {
                         if (snapshot.exists()) {
                             profileImageUrlV = snapshot.child("profilepic").getValue().toString();
 
                         }
 
-                    }
-                    catch (NullPointerException ignored){
+                    } catch (NullPointerException ignored) {
 
                     }
 
