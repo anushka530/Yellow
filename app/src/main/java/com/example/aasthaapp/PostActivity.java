@@ -15,12 +15,15 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.aasthaapp.Utils.posts;
@@ -94,6 +97,7 @@ public class PostActivity extends AppCompatActivity {
 
 
 
+
         sendImagePost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,6 +152,7 @@ public class PostActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+     
         if (mUser == null) {
             SendUserToLoginActivity();
         } else {
@@ -271,4 +276,6 @@ public class PostActivity extends AppCompatActivity {
         startActivity(i);
         super.onBackPressed();
     }
+
+
 }
