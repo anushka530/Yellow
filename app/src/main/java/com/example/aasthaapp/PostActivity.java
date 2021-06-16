@@ -15,14 +15,19 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.example.aasthaapp.Adapters.UsersAdapter;
+import com.example.aasthaapp.Models.User;
 import com.example.aasthaapp.Utils.posts;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -271,4 +276,7 @@ public class PostActivity extends AppCompatActivity {
         startActivity(i);
         super.onBackPressed();
     }
-}
+
+
+
+    }
