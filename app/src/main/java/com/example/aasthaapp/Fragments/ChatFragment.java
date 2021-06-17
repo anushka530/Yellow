@@ -56,6 +56,7 @@ public class ChatFragment extends Fragment implements SearchView.OnQueryTextList
         auth = FirebaseAuth.getInstance();
         list=new ArrayList<>();
 
+
         setHasOptionsMenu(true);
 
         adapter= new UsersAdapter(list, getContext());

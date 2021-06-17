@@ -58,6 +58,9 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.viewHolder> 
 
     }
 
+    public UsersAdapter(FirebaseRecyclerOptions<User> options) {
+    }
+
     @NonNull
     @Override
     public viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
