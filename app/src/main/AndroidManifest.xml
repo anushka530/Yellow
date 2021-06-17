@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.aasthaapp">
+    package="com.techsters.aasthaapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -11,17 +11,17 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.AasthaApp">
-        <activity android:name=".TipsActivity"></activity>
-        <activity android:name=".MusicActivity" />
-        <activity android:name=".IntroActivity" />
-        <activity android:name=".PostActivity" >
+        <activity android:name="com.techsters.aasthaapp.TipsActivity"></activity>
+        <activity android:name="com.techsters.aasthaapp.MusicActivity" />
+        <activity android:name="com.techsters.aasthaapp.IntroActivity" />
+        <activity android:name="com.techsters.aasthaapp.PostActivity" >
 
         </activity>
 
 
 
-        <activity android:name=".SettingsActivity" />
-        <activity android:name=".splashActivity">
+        <activity android:name="com.techsters.aasthaapp.SettingsActivity" />
+        <activity android:name="com.techsters.aasthaapp.splashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,18 +29,18 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".chatDetailActivity" />
-        <activity android:name=".aboutActivity" />
-        <activity android:name=".SignInActivity" />
-        <activity android:name=".signUPActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name="com.techsters.aasthaapp.chatDetailActivity" />
+        <activity android:name="com.techsters.aasthaapp.aboutActivity" />
+        <activity android:name="com.techsters.aasthaapp.SignInActivity" />
+        <activity android:name="com.techsters.aasthaapp.signUPActivity" />
+        <activity android:name="com.techsters.aasthaapp.MainActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
         <service
-            android:name=".Models.MyFirebaseMessagingService"
+            android:name="com.techsters.aasthaapp.Models.MyFirebaseMessagingService"
             android:directBootAware="true"
             android:exported="false">
             <intent-filter>

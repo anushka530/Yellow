@@ -9,9 +9,9 @@ android {
 
 
     defaultConfig {
-        applicationId "com.example.aasthaapp"
+        applicationId "com.techsters.aasthaapp"
         minSdkVersion 19
-        targetSdkVersion 30
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
