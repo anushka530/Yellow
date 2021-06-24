@@ -31,6 +31,14 @@
           }
         },
         {
+          "client_id": "1077495387498-v7bfhuh43l0noscq77lo53u9ug8g1av4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.techsters.aasthaapp",
+            "certificate_hash": "4c02f7411a1ec9453a9aaaa8b28ad2bba1d1b342"
+          }
+        },
+        {
           "client_id": "1077495387498-5g70nir6ku1g5c5jtsc2kps6rsd6ipkb.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -4,6 +4,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('AshaApp.jks')
+            storePassword 'Anushka'
+            keyAlias 'key0'
+            keyPassword 'Anushka'
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
@@ -31,7 +39,26 @@ android {
         viewBinding true
     }
 
-
+    signingConfigs {
+        releaseSign {
+            storeFile file("AashaApp.jks")
+            storePassword "Anushka"
+            keyAlias "key0"
+            keyPassword "Anushka"
+        }
+    }
+    buildTypes {
+        release {
+            signingConfig signingConfigs.releaseSign
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug{
+            signingConfig signingConfigs.debug
+            debuggable true
+            minifyEnabled false
+        }
+    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
