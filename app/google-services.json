@@ -1,33 +1,50 @@
 {
   "project_info": {
-    "project_number": "568493740482",
-    "project_id": "aastha-app-b663e",
-    "storage_bucket": "aastha-app-b663e.appspot.com"
+    "project_number": "1077495387498",
+    "firebase_url": "https://aasha-app-default-rtdb.firebaseio.com",
+    "project_id": "aasha-app",
+    "storage_bucket": "aasha-app.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:568493740482:android:b070a04fa493b72cdcc65b",
+        "mobilesdk_app_id": "1:1077495387498:android:f61c5bbefe507155280113",
         "android_client_info": {
           "package_name": "com.techsters.aasthaapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "568493740482-gm9qd522plve7jdglcflhddm9ih4phfe.apps.googleusercontent.com",
+          "client_id": "1077495387498-g42li80rrvcd02s5uhetj7ueu48qu6dc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.techsters.aasthaapp",
+            "certificate_hash": "1a41763ef79103931ad4de10ec1f0654a1ab9c91"
+          }
+        },
+        {
+          "client_id": "1077495387498-s8qdtgqsqir7jl5gpqu5mrc4l6dak4ma.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.techsters.aasthaapp",
+            "certificate_hash": "6ef95d71361fe3c0d629bde9c4e5ecfd4f6dad92"
+          }
+        },
+        {
+          "client_id": "1077495387498-5g70nir6ku1g5c5jtsc2kps6rsd6ipkb.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBmYGkBN0HxOgdILPeQQms45O0IPBryH-c"
+          "current_key": "AIzaSyA1UHXt5s_WbRfhdm6kgt8guzY6DR8yJ84"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "568493740482-gm9qd522plve7jdglcflhddm9ih4phfe.apps.googleusercontent.com",
+              "client_id": "1077495387498-5g70nir6ku1g5c5jtsc2kps6rsd6ipkb.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
